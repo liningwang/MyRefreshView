@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wangln.myrefreshview.MainActivity">
+
+    <com.wangln.myrefreshview.BestRefreshView
+        android:id="@+id/brv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    <!--    <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:entries="@array/data"/>-->
+       <!-- <GridView
+            android:id="@+id/gv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="3"/>-->
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv"/>
+    </com.wangln.myrefreshview.BestRefreshView>
+</RelativeLayout>
