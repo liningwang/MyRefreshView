@@ -278,7 +278,7 @@ public class BestRefreshView extends ViewGroup{
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        mTop = t;
+        mTop = 0;
         if(headView != null) {
             headerHeight = headView.getMeasuredHeight();
         }
@@ -286,17 +286,17 @@ public class BestRefreshView extends ViewGroup{
             footerHeight = footerView.getMeasuredHeight();
         }
         if(headBack == null && headView != null) {
-            headView.layout(l,t - headView.getMeasuredHeight(),r,t);
+            headView.layout(0,0 - headView.getMeasuredHeight(),r-l,0);
         } else if(headBack != null) {
-            headBack.layout(l,t - headBack.getMeasuredHeight(),r,t);
+            headBack.layout(0,0 - headBack.getMeasuredHeight(),r-l,0);
         }
         mTarget = getChildAt(0);
-        mTarget.layout(l,t,r,b);
+        mTarget.layout(0,0,r-l,b-t);
 
         if(footerBack == null && footerView != null) {
-            footerView.layout(l,b,r,b+footerView.getMeasuredHeight());
+            footerView.layout(0,b-t,r-l,b-t+footerView.getMeasuredHeight());
         } else if(footerBack != null){
-            footerBack.layout(l,b,r,b+footerBack.getMeasuredHeight());
+            footerBack.layout(0,b-t,r-l,b-t+footerBack.getMeasuredHeight());
         }
     }
 }
