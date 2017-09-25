@@ -1,10 +1,8 @@
 package com.wangln.myrefreshview;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -13,8 +11,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.AbsListView;
-import android.widget.Adapter;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
 
@@ -28,6 +24,7 @@ public class BestRefreshView extends ViewGroup{
     ViewGroup headBack;
     ViewGroup footerBack;
     View mTarget;
+    private boolean isRefreshing = false;
     int pullDirection;
     int footerHeight;
     int headerHeight;
@@ -209,6 +206,7 @@ public class BestRefreshView extends ViewGroup{
     public void endRefresh(){
         end = true;
         if(end) {
+            isRefreshing = false;
             mMode = REFRESH;
             smoothScrollTo(mTop);
         }
@@ -269,7 +267,8 @@ public class BestRefreshView extends ViewGroup{
             setState(value);
             invalidate();
         } else {
-            if(mMode == RELEASE_TO_REFRESH) {
+            if(mMode == RELEASE_TO_REFRESH && !isRefreshing) {
+                isRefreshing = true;
                 if(lisetner != null) {
                     lisetner.onRefresh(pullDirection);
                 }
@@ -279,14 +278,13 @@ public class BestRefreshView extends ViewGroup{
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.d("wang","onLayout " + headView + " footer " + footerView
-        );
-        Log.d("wang","headView.getMeasuredHeight() " + headView.getMeasuredHeight() +
-        " footerView.getMeasuredHeight() " + footerView.getMeasuredHeight()
-        );
         mTop = t;
-        headerHeight = headView.getMeasuredHeight();
-        footerHeight = footerView.getMeasuredHeight();
+        if(headView != null) {
+            headerHeight = headView.getMeasuredHeight();
+        }
+        if(footerView != null) {
+            footerHeight = footerView.getMeasuredHeight();
+        }
         if(headBack == null && headView != null) {
             headView.layout(l,t - headView.getMeasuredHeight(),r,t);
         } else if(headBack != null) {
